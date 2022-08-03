@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<ctype.h>
+#include<string.h>
 
 typedef struct 
 {
@@ -9,20 +10,41 @@ typedef struct
     int paginas;
 }livro;
 
-
-
-void Inserir(char*titulo ,char*autor,int paginas);
-void RemoverLivro();
-void ListarLivros();
-void BuscarLivro();
-
-
+livro *livros;
 
 int main(){
-    livro DadosLivros;
+    FILE * fp;
+    fp = fopen("dados.txt","rw");
+    char linhas[50];
+    int i ,j,caunt;
 
+    for(i=0;fgets(linhas,50,fp)!=NULL;i++){
+        caunt++;
+    }
 
+    livros=malloc(caunt*sizeof(livro));
+    fclose(fp);
 
+    for(i=0;i<caunt;i++){
+        fgets(linhas,50,fp);
+        int posicaodebarra=0;
+        int tamanho=strlen(linhas);
+        for(j=0;linhas[j] == "/";j++){
+        }
+        titulo = 0 ate j-1;
+        posicaodebarra = j;
+        for(j;linhas[j] == "/";j++){
+        }
+        autor = posicaodebarra ate j-1;
+        }
+        char *paginas = "536";
+        int paginass = atoi(paginas);
+        
+    
+        
+    
+
+    system("clear");
     int op;
     do{
         printf("\n\n\n");
@@ -38,15 +60,23 @@ int main(){
         switch (op){
             
         case 1:
-            Inserir(DadosLivros.titulo, DadosLivros.autor, DadosLivros.paginas);
+            InserirLivro();
             break;
+        case 2:
 
-
-
-        case 4:
-            BuscarLivro(DadosLivros.titulo);
-            break;  
+            break;
         
+        case 3:
+            ListarLivros();
+
+            break;
+        
+        case 4:
+            BuscarLivro();
+
+            break;
+            
+
         case 5:
             return 0;
             break;
@@ -62,76 +92,45 @@ int main(){
 
 
 
-
-
-
-
-
-    void Inserir(char*titulo ,char*autor,int paginas){
-        livro DadosLivro;
-        FILE * fp;
-         fp = fopen("dados.txt","a");
+void InserirLivro(){    
+    livro DadosLivro;
+    FILE * fp;
+    fp = fopen("dados.txt","a");
     
 
         printf("\n\t\t\t  Voce escolheu cadastrar livro!\n");
 
-            printf("digite o nome do livro\n"); 
-            scanf("%s", &DadosLivro.titulo);
-            fprintf(fp," %s",DadosLivro.titulo);
-            printf("digite os autores do livro\n");
-            scanf("%s", &DadosLivro.autor);
-            fprintf(fp," %s",DadosLivro.autor);
-            printf("Digite o numero de paginas\n");
-            scanf("%d", &DadosLivro.paginas);
-            fprintf(fp," %d",DadosLivro.paginas);
+        printf("digite o nome do livro\n"); 
+        scanf("%s", &DadosLivro.titulo);
+        fprintf(fp," %s/",DadosLivro.titulo);
+        printf("digite os autores do livro\n");
+        scanf("%s", &DadosLivro.autor);
+        fprintf(fp," %s/",DadosLivro.autor);
+        printf("Digite o numero de paginas\n");
+        scanf("%d", &DadosLivro.paginas);
+        fprintf(fp," %d/\n",DadosLivro.paginas);
 
-            fclose(fp);
-    }
+        fclose(fp);
+}
 
 
+void BuscarLivro (){
+    char testetitulo[200];
+    
+     
+    printf("\n\n\t\t\t    Campo: Buscar livros\n\n\n");
+    printf("\t\t\t Busca de livros por Título:\n\n");
+        
+    printf("\nTítulo: ");
+    scanf(" %s",testetitulo); 
+ 
+}
 
 
     
-    void BuscarLivro (char *titulo){
-        FILE * fp;
-        livro DadosLivro;
-        char testetitulo[200];
-        int result;
-        
-      
-        fp = fopen("dados.txt","r+b");
-     
-        printf("\n\n\t\t\t    Campo: Buscar livros\n\n\n");
-        printf("\t\t\t Busca de livros por Título:\n\n");
-        
-        printf("\nTítulo: ");
-        scanf(" %s",testetitulo); 
+void ListarLivros(){
 
-        
-               
-        fread(&DadosLivro,sizeof(livro),1,fp);
-         
-           
-        result = strcasecmp (testetitulo,DadosLivro.titulo);
-            if (result == 0){
-                printf("o livro existe no acervo");
-                //fscanf(fp,"%s",&DadosLivro.titulo);
-                printf("Titulo..........................: %s\n", DadosLivro.titulo);
-                //fscanf(fp, "%s",&DadosLivro.autor);
-                //printf("Autor...........................: %s\n", DadosLivro.autor);
-                //fscanf(fp, "%d", &DadosLivro.paginas);
-                //printf("Numero de paginas...............: %d\n", DadosLivro.paginas);
-                //break;
-            }else{
-                if(feof(fp)){
-                    printf("Nao ha livro no acervo com o titulo: %s\n\n", testetitulo );
-                }
-            }    
-      
-          
 
-    }       
+}
 
- 
-       
-                            
+
