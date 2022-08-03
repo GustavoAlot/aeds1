@@ -28,7 +28,7 @@ int main(){
         printf("\n\n\n");
         printf("\n\t\t\t     Sistema de biblioteca\n\n");
         printf("\n\t\t     ( 1 ) Cadastrar livro\n");
-        printf("\t\t     ( 2 )   Remover livro\n");
+        printf("\t\t     ( 2 ) Remover livro\n");
         printf("\t\t     ( 3 ) Listar livros cadastrados\n");
         printf("\t\t     ( 4 ) Buscar livros cadastrados\n");
         printf("\t\t     ( 5 ) Sair do programa\n");
@@ -42,16 +42,17 @@ int main(){
             break;
 
 
-            
+
+        case 4:
+            BuscarLivro(DadosLivros.titulo);
+            break;  
         
         case 5:
+            return 0;
             break;
-    
-        
-          
 
         default:
-            printf("Opcao nao valida\n\n");
+            printf("\n\t\tOpcao nao valida\n\n");
         } 
     }while (op !=0 );
 
@@ -91,25 +92,46 @@ int main(){
 
 
     
-
-            
+    void BuscarLivro (char *titulo){
+        FILE * fp;
+        livro DadosLivro;
+        char testetitulo[200];
+        int result;
         
-    
+      
+        fp = fopen("dados.txt","r+b");
+     
+        printf("\n\n\t\t\t    Campo: Buscar livros\n\n\n");
+        printf("\t\t\t Busca de livros por Título:\n\n");
+        
+        printf("\nTítulo: ");
+        scanf(" %s",testetitulo); 
 
+        
+               
+        fread(&DadosLivro,sizeof(livro),1,fp);
+         
+           
+        result = strcasecmp (testetitulo,DadosLivro.titulo);
+            if (result == 0){
+                printf("o livro existe no acervo");
+                //fscanf(fp,"%s",&DadosLivro.titulo);
+                printf("Titulo..........................: %s\n", DadosLivro.titulo);
+                //fscanf(fp, "%s",&DadosLivro.autor);
+                //printf("Autor...........................: %s\n", DadosLivro.autor);
+                //fscanf(fp, "%d", &DadosLivro.paginas);
+                //printf("Numero de paginas...............: %d\n", DadosLivro.paginas);
+                //break;
+            }else{
+                if(feof(fp)){
+                    printf("Nao ha livro no acervo com o titulo: %s\n\n", testetitulo );
+                }
+            }    
+      
+          
 
+    }       
 
-
-
-    
+ 
        
-       
-    
-
-
-
-
-
-
-
-
-
+                            
