@@ -13,10 +13,11 @@ typedef struct
 livro *livros;
 
 int main(){
+    
     FILE * fp;
-    fp = fopen("dados.txt","rw");
+    fp = fopen("dados.txt","r");
     char linhas[50];
-    int i ,j,caunt;
+    int i ,j,caunt = 0;
 
     for(i=0;fgets(linhas,50,fp)!=NULL;i++){
         caunt++;
@@ -25,26 +26,47 @@ int main(){
     livros=malloc(caunt*sizeof(livro));
     fclose(fp);
 
+    fp = fopen("dados.txt","r");
+
     for(i=0;i<caunt;i++){
         fgets(linhas,50,fp);
         int posicaodebarra=0;
         int tamanho=strlen(linhas);
-        for(j=0;linhas[j] == "/";j++){
+        char titulo[200];
+        char autor[200];
+        char aux[200];
+        int paginas;
+        int j = 0, k = 0;
+        while (linhas[j] != '/')
+        {
+            titulo[j] = linhas[j];
+            j++;
         }
-        titulo = 0 ate j-1;
-        posicaodebarra = j;
-        for(j;linhas[j] == "/";j++){
-        }
-        autor = posicaodebarra ate j-1;
-        }
-        char *paginas = "536";
-        int paginass = atoi(paginas);
-        
-    
-        
-    
+        titulo[j] = '\0';
+        j++;
+        while (linhas[j] != '/')
+        {
 
-    system("clear");
+            autor[k] = linhas[j];
+            k++;
+            j++;
+        }
+        j++;
+        autor[k] = '\0';
+        for(int l = 0; j < tamanho; j++, l++)
+        {
+            aux[l] = linhas[j];
+        }
+
+        paginas = atoi(aux);
+        strcpy(livros[i].titulo, titulo);
+        strcpy(livros[i].autor, autor);
+        livros[i].paginas = paginas;
+    }
+        //printf("%s %s %d \n",livros[0].titulo,livros[0].autor,livros[0].paginas);
+        //printf("%s %s %d",livros[1].titulo,livros[1].autor,livros[1].paginas);
+
+    //system("clear");
     int op;
     do{
         printf("\n\n\n");
@@ -60,19 +82,20 @@ int main(){
         switch (op){
             
         case 1:
-            InserirLivro();
+            //InserirLivro();
             break;
         case 2:
+            //RemoverLivro();
 
             break;
         
         case 3:
-            ListarLivros();
+           //ListarLivros();
 
             break;
         
         case 4:
-            BuscarLivro();
+            //BuscarLivro();
 
             break;
             
@@ -89,48 +112,3 @@ int main(){
     system("pause");
     return 0 ;
     }
-
-
-
-void InserirLivro(){    
-    livro DadosLivro;
-    FILE * fp;
-    fp = fopen("dados.txt","a");
-    
-
-        printf("\n\t\t\t  Voce escolheu cadastrar livro!\n");
-
-        printf("digite o nome do livro\n"); 
-        scanf("%s", &DadosLivro.titulo);
-        fprintf(fp," %s/",DadosLivro.titulo);
-        printf("digite os autores do livro\n");
-        scanf("%s", &DadosLivro.autor);
-        fprintf(fp," %s/",DadosLivro.autor);
-        printf("Digite o numero de paginas\n");
-        scanf("%d", &DadosLivro.paginas);
-        fprintf(fp," %d/\n",DadosLivro.paginas);
-
-        fclose(fp);
-}
-
-
-void BuscarLivro (){
-    char testetitulo[200];
-    
-     
-    printf("\n\n\t\t\t    Campo: Buscar livros\n\n\n");
-    printf("\t\t\t Busca de livros por Título:\n\n");
-        
-    printf("\nTítulo: ");
-    scanf(" %s",testetitulo); 
- 
-}
-
-
-    
-void ListarLivros(){
-
-
-}
-
-
