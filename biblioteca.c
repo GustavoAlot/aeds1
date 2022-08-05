@@ -9,8 +9,11 @@ typedef struct
     char autor[200];
     int paginas;
 }livro;
-
 livro *livros;
+
+
+
+
 
 int main(){
     
@@ -51,7 +54,6 @@ int main(){
         j++;
         while (linhas[j] != '/')
         {
-
             autor[k] = linhas[j];
             k++;
             j++;
@@ -62,7 +64,6 @@ int main(){
         {
             aux[l] = linhas[j];
         }
-
         paginas = atoi(aux);
         strcpy(livros[i].titulo, titulo);
         strcpy(livros[i].autor, autor);
@@ -116,6 +117,10 @@ int main(){
     }
 
 
+
+
+
+
     void InserirLivro() {
         FILE *fp;
         fp = fopen("dados.txt","a");
@@ -137,17 +142,16 @@ int main(){
 
 
 
+
+
+
     void ListarLivros(int caunt){
-        
         int i;
 
-    
         for(i=0;i<caunt;i++){
             printf("%s %s %d\n",livros[i].titulo,livros[i].autor,livros[i].paginas);
 
         }
-
-        
     }
 
 
