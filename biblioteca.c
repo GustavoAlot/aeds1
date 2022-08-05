@@ -16,6 +16,11 @@ int main(){
     
     FILE * fp;
     fp = fopen("dados.txt","r");
+
+    if((fp = fopen("dados.txt","r"))==NULL){
+        fp = fopen("dados.txt","w");
+    }
+
     char linhas[50];
     int i ,j,caunt = 0;
 
@@ -63,10 +68,7 @@ int main(){
         strcpy(livros[i].autor, autor);
         livros[i].paginas = paginas;
     }
-        //printf("%s %s %d \n",livros[0].titulo,livros[0].autor,livros[0].paginas);
-        //printf("%s %s %d",livros[1].titulo,livros[1].autor,livros[1].paginas);
 
-    //system("clear");
     int op;
     do{
         printf("\n\n\n");
@@ -82,7 +84,7 @@ int main(){
         switch (op){
             
         case 1:
-            //InserirLivro();
+            InserirLivro();
             break;
         case 2:
             //RemoverLivro();
@@ -90,12 +92,12 @@ int main(){
             break;
         
         case 3:
-           //ListarLivros();
+           ListarLivros(caunt);
 
             break;
         
         case 4:
-            //BuscarLivro();
+            BuscarLivro(caunt);
 
             break;
             
@@ -111,4 +113,66 @@ int main(){
 
     system("pause");
     return 0 ;
+    }
+
+
+    void InserirLivro() {
+        FILE *fp;
+        fp = fopen("dados.txt","a");
+        char titulo[200],autor[200];
+        int paginas;
+
+        printf("Escreva o titulo\n");
+        scanf("%s" ,titulo);
+        fprintf(fp,"%s/",titulo);
+        printf("Escreva o autor\n");
+        scanf("%s" ,autor);
+        fprintf(fp,"%s/",autor);
+        printf("Escreva o número de páginas\n");
+        scanf("%d" ,&paginas);
+        fprintf(fp,"%d/\n",paginas);
+        fclose(fp);
+    }   
+
+
+
+
+    void ListarLivros(int caunt){
+        
+        int i;
+
+    
+        for(i=0;i<caunt;i++){
+            printf("%s %s %d\n",livros[i].titulo,livros[i].autor,livros[i].paginas);
+
+        }
+
+        
+    }
+
+
+
+
+    
+    void BuscarLivro(caunt){
+        int i, existelivro;
+        char quertitulo[200];
+        
+        printf("\t\n Voce escolheu buscar por um livro");
+        printf("\n Digite o titulo do livro\n");
+        scanf("%s", quertitulo);
+
+
+        for(i=0;i<caunt;i++){
+            if(strcmp(livros[i].titulo,quertitulo)==0){
+                printf("\t\no livro existe no nosso acervo\n");
+                printf("%s %s %d\n",livros[i].titulo,livros[i].autor,livros[i].paginas);
+                existelivro=1;
+            }
+        }
+        if(existelivro != 1){
+            printf("o livro nao existe no nosso acervo");
+
+        }
+
     }
