@@ -78,26 +78,42 @@ void InserirLivro() {
     FILE *fp;
     fp = fopen("dados.txt","a");
     char titulo[200],autor[200];
-    int paginas;
-
-        printf("Escreva o titulo\n");
-        scanf("%s" ,titulo);
-        fprintf(fp,"%s/",titulo);
-        printf("Escreva o autor\n");
-        scanf("%s" ,autor);
-        fprintf(fp,"%s/",autor);
-        printf("Escreva o número de páginas\n");
-        scanf("%d" ,&paginas);
-        fprintf(fp,"%d/\n",paginas);
-        fclose(fp);
-
+    int paginas,i,existelivro=0;
         contarLinhas();
-        diferencia();
+        
+    
+        printf("\tVocê escolheu inserir um novo livro!\n");
+        printf("\tEscreva o titulo\n");
+        scanf("%s" ,titulo);
+        
+        for(i=0;i<caunt;i++){
+            if(strcmp(livros[i].titulo,titulo)==0){
+            printf("\t\n O livro já existe no nosso acervo! ");
+            existelivro=1;
+            }
+        }
+
+        if (existelivro!=1){
+            fprintf(fp,"%s/",titulo);
+            printf("\tEscreva o autor\n");
+            scanf("%s" ,autor);
+            fprintf(fp,"%s/",autor);
+            printf("\tEscreva o número de páginas\n");
+            scanf("%d" ,&paginas);
+            fprintf(fp,"%d/\n",paginas);
+            
+        }
+        
+    
+    fclose(fp);
+    contarLinhas();
+    diferencia();
 }  
 
 
 
-void ListarLivros(int caunt){
+void ListarLivros(){
+    
     int i, c;
     typedef struct 
     {
@@ -106,11 +122,14 @@ void ListarLivros(int caunt){
     int paginas;
     }aux;
 
-    aux *newstruc; 
+    aux newstruc[caunt]; 
+
+    printf("\n\t\tVocê escolheu listar todos os livros, aqui estão em ordem alfabética:\n\n");
         
     for (int i=0; i<caunt-1; i++){
         for (int j=0; j<caunt-1-i; j++){
             if (strcmp(livros[j].titulo,livros[j+1].titulo) > 0){
+
                 strcpy(newstruc[j].titulo,livros[j].titulo);
                 strcpy(newstruc[j].autor,livros[j].autor);
                 newstruc[j].paginas=livros[j].paginas;
@@ -135,23 +154,23 @@ void ListarLivros(int caunt){
 }
 
 
-void BuscarLivro(caunt){
+void BuscarLivro(){
     int i, existelivro;
     char quertitulo[200];
         
-    printf("\t\n Voce escolheu buscar por um livro");
-    printf("\n Digite o titulo do livro\n");
+    printf("\t\n Você escolheu buscar por um livro no nosso acervo!");
+    printf("\n\t Digite o titulo do livro.\n");
     scanf("%s", quertitulo);
 
     for(i=0;i<caunt;i++){
         if(strcmp(livros[i].titulo,quertitulo)==0){
-            printf("\t\no livro existe no nosso acervo\n");
+            printf("\t\n O livro pesquisado existe no nosso acervo,aqui está:  ");
             printf("%s %s %d\n",livros[i].titulo,livros[i].autor,livros[i].paginas);
             existelivro=1;
         }
     }
     if(existelivro != 1){
-        printf("o livro nao existe no nosso acervo");
+        printf("Desculpe, o livro pesquisado não existe no nosso acervo.");
     }
 
 }
@@ -174,11 +193,11 @@ int main(){
     int op;
     do{
         printf("\n\n\n");
-        printf("\n\t\t\t     Sistema de biblioteca\n\n");
-        printf("\n\t\t     ( 1 ) Cadastrar livro\n");
+        printf("\n\t\t    Sistema de biblioteca\n\n");
+        printf("\n\t\t     ( 1 ) Cadastrar novo livro\n");
         printf("\t\t     ( 2 ) Remover livro\n");
         printf("\t\t     ( 3 ) Listar livros cadastrados\n");
-        printf("\t\t     ( 4 ) Buscar livros cadastrados\n");
+        printf("\t\t     ( 4 ) Buscar por livro cadastrado\n");
         printf("\t\t     ( 5 ) Sair do programa\n");
         printf("\nOpcao Desejada: ");
         scanf("%d", &op);      
@@ -194,12 +213,12 @@ int main(){
             break;
         
         case 3:
-           ListarLivros(caunt);
+           ListarLivros();
 
             break;
         
         case 4:
-            BuscarLivro(caunt);
+            BuscarLivro();
 
             break;
             
@@ -211,29 +230,8 @@ int main(){
         default:
             printf("\n\t\tOpcao nao valida\n\n");
         } 
-    } while (op !=0 );
+    } while (op !=0);
 
     system("pause");
     return 0 ;
     }
-
-
-
-
-
-
-   
-
-
-
-
-
-
-
-    
-
-
-
-
-    
-    
