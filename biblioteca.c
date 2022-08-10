@@ -40,7 +40,6 @@ void diferencia(){
 
     for(i = 0; i<caunt; i++){
         fgets(linhas,50,fp);
-        int posicaodebarra=0;
         int tamanho=strlen(linhas);
         char titulo[200];
         char autor[200];
@@ -79,7 +78,7 @@ void InserirLivro() {
     fp = fopen("dados.txt","a");
     char titulo[200],autor[200];
     int paginas,i,existelivro=0;
-        contarLinhas();
+    contarLinhas();
         
     
         printf("\tVocê escolheu inserir um novo livro!\n");
@@ -99,24 +98,22 @@ void InserirLivro() {
             scanf("%s" ,autor);
             fprintf(fp,"%s/",autor);
             printf("\tEscreva o número de páginas\n");
+            //fazer com que nao possa digitar string nem char
             scanf("%d" ,&paginas);
             fprintf(fp,"%d/\n",paginas);
-            
         }
-        
-    
+
     fclose(fp);
     contarLinhas();
     diferencia();
 }  
 
 
-
 void ListarLivros(){
     
     int i, c;
-    typedef struct 
-    {
+
+    typedef struct {
     char titulo[200];
     char autor[200];
     int paginas;
@@ -141,21 +138,17 @@ void ListarLivros(){
                 strcpy(livros[j+1].titulo, newstruc[j].titulo);
                 strcpy(livros[j+1].autor, newstruc[j].autor);
                 livros[j+1].paginas =newstruc[j].paginas;
-                
             }
         }
     }
-
     for(i=0;i<caunt;i++){
         printf("%s %s %d\n",livros[i].titulo,livros[i].autor,livros[i].paginas);
     }
-
-        
 }
 
 
 void BuscarLivro(){
-    int i, existelivro;
+    int i, existelivro=0;
     char quertitulo[200];
         
     printf("\t\n Você escolheu buscar por um livro no nosso acervo!");
@@ -172,8 +165,50 @@ void BuscarLivro(){
     if(existelivro != 1){
         printf("Desculpe, o livro pesquisado não existe no nosso acervo.");
     }
-
 }
+
+
+void removelivro(){
+    char quertitulo[200];
+    int i, existelivro;
+
+    printf("\n\n\t\tVocê escolheu remover um livro do acervo");
+    printf("Digite o titulo a ser removido");
+    scanf("%s", quertitulo);
+
+    for(i=0;i<caunt;i++){
+        if(strcmp(livros[i].titulo,quertitulo)==0){
+            //remover o livro da string e printar a string no txt
+            
+            
+            
+            
+
+
+
+
+
+            
+            
+            
+
+
+
+
+
+
+
+
+
+            existelivro=1;
+        }
+    }
+    if(existelivro != 1){
+        printf("O livro digitado já não existe no nosso acervo.");
+    }
+}
+
+
 
     
 
@@ -182,7 +217,6 @@ int main(){
     int i ,j;
     contarLinhas();
 
-
     livros=malloc(caunt*sizeof(livro));
 
     FILE * fp;
@@ -190,7 +224,7 @@ int main(){
 
     diferencia();
 
-    int op;
+    int op;//nao deixar digitar algo alem das opcoes do menu
     do{
         printf("\n\n\n");
         printf("\n\t\t    Sistema de biblioteca\n\n");
@@ -228,7 +262,7 @@ int main(){
             break;
 
         default:
-            printf("\n\t\tOpcao nao valida\n\n");
+            printf("\n\t\tOpção não válida\n\n");
         } 
     } while (op !=0);
 
