@@ -1,4 +1,4 @@
-#include<stdio.h>
+ #include<stdio.h>
 #include<stdlib.h>
 #include<ctype.h>
 #include<string.h>
@@ -218,12 +218,13 @@ void RemoverLivro(){                 //função que remove livro do acervo a par
     }
 
     fp = fopen("dados.txt","w");
-    printf("%d",caunt);
+
 
     for(i=0;i<caunt-1;i++){             //reescreve o arquivo pulando o livro que desejou ser removido
         if(i != position){
             fprintf(fp,"%s/%s/%d/\n",livros[i].titulo,livros[i].autor,livros[i].paginas);
         }else if (i == position && i != caunt-1){
+            caunt++;
             fprintf(fp,"%s/%s/%d/\n",livros[i+1].titulo,livros[i+1].autor,livros[i+1].paginas);
             i++;
         }
