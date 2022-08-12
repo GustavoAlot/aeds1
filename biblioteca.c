@@ -3,6 +3,7 @@
 #include<ctype.h>
 #include<string.h>
 
+//estrutura dos livros
 typedef struct 
 {
     char titulo[200];
@@ -11,11 +12,12 @@ typedef struct
 }livro;
 
 livro *livros;
-int caunt = 0;
+int caunt = 0;                  //variavel global para numero de linhas do txt.
 char linhas[50];
 
 
-void contarLinhas(){
+
+void contarLinhas(){            //funcao para contar linhas do txt.
     FILE * fp;
     caunt=0;
     fp = fopen("dados.txt","r");
@@ -33,7 +35,8 @@ void contarLinhas(){
     fclose(fp);
 }
 
-void diferencia(){
+
+void diferencia(){                //funcao que diferencia titulo,autor e paginas colocando dentro do vetor de livros.
     FILE * fp;
     fp = fopen("dados.txt","r");
     int i, j = 0;
@@ -73,14 +76,14 @@ void diferencia(){
 }
 
 
-void InserirLivro() {
+
+void InserirLivro() {                //funcao para inserir um novo livro no arqquivo txt
     FILE *fp;
     fp = fopen("dados.txt","a");
     char titulo[200],autor[200];
     int paginas,i,existelivro=0;
     contarLinhas();
         
-    
         printf("\tVocê escolheu inserir um novo livro!\n");
         printf("\tEscreva o titulo\n");
         scanf("%s" ,titulo);
@@ -109,7 +112,8 @@ void InserirLivro() {
 }  
 
 
-void ListarLivros(){
+
+void ListarLivros(){                //funcao parar listar os livros em ordem alfabetica.
     
     int i, c;
 
@@ -118,6 +122,9 @@ void ListarLivros(){
     char autor[200];
     int paginas;
     }aux;
+
+    contarLinhas();
+    diferencia();
 
     aux newstruc[caunt]; 
 
@@ -147,9 +154,14 @@ void ListarLivros(){
 }
 
 
-void BuscarLivro(){
+
+
+void BuscarLivro(){                 //funcao para buscar algum livro pelo titulo.
     int i, existelivro=0;
     char quertitulo[200];
+
+    contarLinhas();
+    diferencia();
         
     printf("\t\n Você escolheu buscar por um livro no nosso acervo!");
     printf("\n\t Digite o titulo do livro.\n");
@@ -168,45 +180,55 @@ void BuscarLivro(){
 }
 
 
-void removelivro(){
+void RemoverLivro(){                 //funcao que remove livro do acervo a partir do titulo
     char quertitulo[200];
-    int i, existelivro;
+    int i ,j,existelivro=0,position,newcaunt;
+    FILE  *fp;
+    
+    
+    fp = fopen("dados.txt","a");
+    contarLinhas();
+    diferencia();
+    newcaunt=caunt;
+    fclose(fp);
 
-    printf("\n\n\t\tVocê escolheu remover um livro do acervo");
-    printf("Digite o titulo a ser removido");
+    printf("\n\n\t\tVocê escolheu remover um livro do acervo\n");
+    printf("Digite o titulo a ser removido\n\n");
     scanf("%s", quertitulo);
 
     for(i=0;i<caunt;i++){
         if(strcmp(livros[i].titulo,quertitulo)==0){
-            //remover o livro da string e printar a string no txt
-            
-            
-            
-            
-
-
-
-
-
-            
-            
-            
-
-
-
-
-
-
-
-
-
             existelivro=1;
+            position=i;
         }
     }
-    if(existelivro != 1){
-        printf("O livro digitado já não existe no nosso acervo.");
+    if(existelivro!= 1){
+        printf("\n\n\t\tO livro ja nao existe no acervo!\n");
+        return 0;
     }
+
+    fp = fopen("dados.txt","w");
+
+
+    for(i=0;i<caunt;i++){
+        if(i != position){
+            fprintf(fp,"%s/%s/%d/\n",livros[i].titulo,livros[i].autor,livros[i].paginas);
+        }else {
+            fprintf(fp,"%s/%s/%d/\n",livros[i+1].titulo,livros[i+1].autor,livros[i+1].paginas);
+            i++;
+        }
+            
+            
+    }
+    
+fclose(fp);           
 }
+    
+
+       
+
+
+                
 
 
 
@@ -217,10 +239,8 @@ int main(){
     int i ,j;
     contarLinhas();
 
-    livros=malloc(caunt*sizeof(livro));
+    livros=malloc(caunt*sizeof(livro));     //alocando dinamicamente o veotor de struc livro
 
-    FILE * fp;
-    fp = fopen("dados.txt","r");
 
     diferencia();
 
@@ -242,7 +262,7 @@ int main(){
             InserirLivro();
             break;
         case 2:
-            //RemoverLivro();
+            RemoverLivro();
 
             break;
         
