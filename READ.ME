@@ -1,3 +1,28 @@
-Biblioteca.c é um software de uma biblioteca ficticia que manipula um txt como banco de dados.
+# Sistema de Biblioteca em C
 
-Trabalho requerido pelo meu professor de algoritmos 1.
+Este projeto consiste em um sistema de biblioteca simples implementado em C. Ele permite a realização de diversas operações, como cadastrar novos livros, remover livros, listar livros cadastrados e buscar por livros no acervo.
+
+## Funcionalidades
+
+### Cadastrar Novo Livro
+
+Permite ao usuário inserir informações sobre um novo livro, incluindo título, autor e número de páginas. As informações são armazenadas em um arquivo de texto chamado `dados.txt`.
+
+### Remover Livro
+
+Permite ao usuário remover um livro do acervo com base no título. O livro removido não será mais listado nas operações de listagem.
+
+### Listar Livros Cadastrados
+
+Exibe a lista de livros cadastrados no acervo, ordenados em ordem alfabética pelo título.
+
+### Buscar por Livro Cadastrado
+
+Permite ao usuário pesquisar por um livro no acervo usando o título. Se o livro for encontrado, suas informações serão exibidas.
+
+## Como Compilar e Executar
+
+Certifique-se de ter um compilador C instalado em seu sistema. Você pode compilar o código usando um comando semelhante ao seguinte:
+
+```bash
+gcc biblioteca.c -o biblioteca
